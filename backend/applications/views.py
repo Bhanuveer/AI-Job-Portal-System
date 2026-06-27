@@ -26,7 +26,7 @@ class ApplyView(APIView):
         return Response({
             'success': True,
             'message': 'Application submitted successfully.',
-            'data': ApplicationSerializer(application).data,
+            'data': ApplicationSerializer(application, context={'request': request}).data,
         }, status=status.HTTP_201_CREATED)
 
 
@@ -41,7 +41,7 @@ class MyApplicationsView(APIView):
         return Response({
             'success': True,
             'message': 'Applications fetched.',
-            'data': ApplicationSerializer(applications, many=True).data,
+            'data': ApplicationSerializer(applications, many=True, context={'request': request}).data,
         })
 
 
@@ -81,7 +81,7 @@ class CheckApplicationView(APIView):
             'success': True,
             'data': {
                 'has_applied': application is not None,
-                'application': ApplicationSerializer(application).data if application else None,
+                'application': ApplicationSerializer(application, context={'request': request}).data if application else None,
             }
         })
 
@@ -98,7 +98,6 @@ class RecruiterApplicantsView(APIView):
             job__recruiter=request.user
         ).select_related('job', 'candidate').order_by('-applied_at')
 
-        # Optional filters
         job_id = request.query_params.get('job_id')
         status_filter = request.query_params.get('status')
         if job_id:
@@ -109,7 +108,7 @@ class RecruiterApplicantsView(APIView):
         return Response({
             'success': True,
             'message': 'Applicants fetched.',
-            'data': ApplicantSerializer(qs, many=True).data,
+            'data': ApplicantSerializer(qs, many=True, context={'request': request}).data,
         })
 
 
@@ -132,5 +131,5 @@ class UpdateApplicationStatusView(APIView):
         return Response({
             'success': True,
             'message': 'Status updated.',
-            'data': ApplicantSerializer(application).data,
+            'data': ApplicantSerializer(application, context={'request': request}).data,
         })
