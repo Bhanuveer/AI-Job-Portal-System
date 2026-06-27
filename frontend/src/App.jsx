@@ -9,9 +9,15 @@ import Layout from './components/layout/Layout'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import NotFoundPage from './pages/NotFoundPage'
+
 import RecruiterDashboard from './pages/recruiter/Dashboard'
 import MyJobsPage from './pages/recruiter/MyJobsPage'
 import JobFormPage from './pages/recruiter/JobFormPage'
+import ApplicantsPage from './pages/recruiter/ApplicantsPage'
+
+import JobsPage from './pages/candidate/JobsPage'
+import JobDetailPage from './pages/candidate/JobDetailPage'
+import MyApplicationsPage from './pages/candidate/MyApplicationsPage'
 
 function App() {
   return (
@@ -25,7 +31,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* Recruiter */}
+          {/* ── Recruiter ── */}
           <Route path="/recruiter/dashboard" element={
             <ProtectedRoute role="recruiter">
               <Layout><RecruiterDashboard /></Layout>
@@ -46,12 +52,34 @@ function App() {
               <Layout><JobFormPage /></Layout>
             </ProtectedRoute>
           } />
+          <Route path="/recruiter/applicants" element={
+            <ProtectedRoute role="recruiter">
+              <Layout><ApplicantsPage /></Layout>
+            </ProtectedRoute>
+          } />
 
-          {/* Candidate — scaffolded, will be built next */}
+          {/* ── Candidate ── */}
           <Route path="/jobs" element={
             <ProtectedRoute role="candidate">
+              <Layout><JobsPage /></Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/jobs/:id" element={
+            <ProtectedRoute role="candidate">
+              <Layout><JobDetailPage /></Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/my-applications" element={
+            <ProtectedRoute role="candidate">
+              <Layout><MyApplicationsPage /></Layout>
+            </ProtectedRoute>
+          } />
+
+          {/* Recommended — built in next feature (ML) */}
+          <Route path="/recommended" element={
+            <ProtectedRoute role="candidate">
               <Layout>
-                <div className="text-slate-500 text-sm">Browse Jobs — coming next feature</div>
+                <div className="text-slate-500 text-sm">Recommendations — coming next feature</div>
               </Layout>
             </ProtectedRoute>
           } />
