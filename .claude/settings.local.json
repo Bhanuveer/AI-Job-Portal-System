@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "Bash(python3 -m venv venv)"
+    ]
+  }
+}
