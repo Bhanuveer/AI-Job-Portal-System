@@ -9,6 +9,7 @@ import Layout from './components/layout/Layout'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import NotFoundPage from './pages/NotFoundPage'
+import ProfilePage from './pages/shared/ProfilePage'
 
 import RecruiterDashboard from './pages/recruiter/Dashboard'
 import MyJobsPage from './pages/recruiter/MyJobsPage'
@@ -18,6 +19,7 @@ import ApplicantsPage from './pages/recruiter/ApplicantsPage'
 import JobsPage from './pages/candidate/JobsPage'
 import JobDetailPage from './pages/candidate/JobDetailPage'
 import MyApplicationsPage from './pages/candidate/MyApplicationsPage'
+import RecommendedPage from './pages/candidate/RecommendedPage'
 
 function App() {
   return (
@@ -30,6 +32,13 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+
+          {/* ── Shared ── */}
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Layout><ProfilePage /></Layout>
+            </ProtectedRoute>
+          } />
 
           {/* ── Recruiter ── */}
           <Route path="/recruiter/dashboard" element={
@@ -74,13 +83,9 @@ function App() {
               <Layout><MyApplicationsPage /></Layout>
             </ProtectedRoute>
           } />
-
-          {/* Recommended — built in next feature (ML) */}
           <Route path="/recommended" element={
             <ProtectedRoute role="candidate">
-              <Layout>
-                <div className="text-slate-500 text-sm">Recommendations — coming next feature</div>
-              </Layout>
+              <Layout><RecommendedPage /></Layout>
             </ProtectedRoute>
           } />
 
